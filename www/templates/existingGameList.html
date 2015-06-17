@@ -1,0 +1,27 @@
+<ion-modal-view>
+
+      <ion-header-bar align-title="left" class="bar-positive">
+        <h1 class="title">Existing Games</h1>
+        <div class="buttons">
+          <button class="button" ng-click="closeModal()">Create New</button>
+        </div>
+      </ion-header-bar>
+      <ion-content>
+        <ion-list sortable>
+            <ion-item ng-repeat="match in matchlist" ng-click="clicked(match.matchID)">
+                <div class="item-content">
+                    <div class="item-divider">{{match.sportname}}</div>
+                    <div class="item-text-wrap">
+                        <ul>
+                            <li>By: {{match.gam.get("createdBy")}}</li>
+                            <li>At: {{match.gam.get("locationname")}}</li>
+                            <li>Date: {{match.gam.get("date") | date:'EEEE, MMM d, y'}}</li>
+                            <li>Time: {{match.gam.get("time")}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+      </ion-content>
+
+</ion-modal-view>

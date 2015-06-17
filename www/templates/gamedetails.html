@@ -1,0 +1,18 @@
+<ion-view view-title="Game Details">
+
+      <ion-content>
+       <ui-gmap-google-map class="map-container" center="match.center" options="match.options" zoom='16'>
+                <ui-gmap-marker coords="match.mapmarker.coords" idkey="match.mapmarker.id" ng-cloak>
+                </ui-gmap-marker>
+              </ui-gmap-google-map>
+              <button class="button button-block button-positive" ng-click="clicked()">
+                {{decide}}
+              </button>
+      <br>
+          <ion-list>
+          <ion-item ng-repeat="player in players" ng-click="goprof(player.id)" >
+          {{player.count}} . &nbsp {{player.name}}
+          </ion-item> 
+          </ion-list>
+      </ion-content>
+</ion-view>

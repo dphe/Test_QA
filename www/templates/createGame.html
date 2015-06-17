@@ -1,0 +1,55 @@
+
+
+<ion-view view-title="Create Game">
+  <ion-header-bar class="colour:red">
+    <h1 class="title">Create Game</h1>
+  </ion-header-bar>
+  <ion-content class="col text-center">
+<form ng-submit="saveGame(newGame)">
+  Sport<br>
+    <select class="col text-center" style="border:1px solid #0f0f0f" 
+    ng-model="newGame.sportChoice" >
+    <option value="Football">Football</option>
+    <option value="Basketball">Basketball</option>
+    <option value="Cricket">Cricket</option>
+    <option value="AmericanFootball">American Football</option>
+    <option value="Tennis">Tennis</option>
+    <option value="Badminton">Badminton</option>
+   </select>
+   
+    <br>
+    Date
+    <br>
+
+    <input class="col text-center" style="border:1px solid #0f0f0f" ng-model="newGame.gameDate" id="gameDate" name="gameDate" type="date">
+    
+    <br>
+    Time
+    <br>
+
+    <input class="col text-center" style="border:1px solid #0f0f0f" ng-model="newGame.gameTime" id="gameTime" name="gameTime" type="time">
+            
+    <br>
+    Venue
+    <br>
+    <div id="map_canvas">
+
+    <ui-gmap-google-map center='map.center' zoom='map.zoom' events="events">
+      <ui-gmap-marker coords="map.center" idkey="1" ng-cloak>
+                
+            </ui-gmap-marker>
+    </ui-gmap-google-map>
+
+    </div>
+
+    <!-- -->
+    
+    <!-- -->
+
+    <button class="button button-block button-positive" >{{butname}}</button>
+    </form>
+  </ion-content>
+
+</ion-view>
+
+

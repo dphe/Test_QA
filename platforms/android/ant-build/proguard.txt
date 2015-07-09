@@ -1,3 +1,19 @@
+# view AndroidManifest.xml #generated:30
+-keep class com.parse.GcmBroadcastReceiver { <init>(...); }
+
+# view AndroidManifest.xml #generated:37
 # view AndroidManifest.xml #generated:9
+-keep class com.parse.ParseBroadcastReceiver { <init>(...); }
+
+# view AndroidManifest.xml #generated:22
+-keep class com.parse.PushService { <init>(...); }
+
+# view AndroidManifest.xml #generated:23
+-keep class com.phonegap.parsepushplugin.ParsePushPluginReceiver { <init>(...); }
+
+# view AndroidManifest.xml #generated:21
+-keep class com.purplebrain.adbuddiz.sdk.AdBuddizActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:15
 -keep class io.cordova.sporten.CordovaApp { <init>(...); }
 

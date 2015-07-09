@@ -8,11 +8,19 @@ $scope.goprof=function(){
 }
 })
 
-.controller('LogoutCtrl', function(ngFB,$scope,$state, $stateParams) {
+.controller('LogoutCtrl', function($ionicViewService,ngFB,$scope,$state, $stateParams,$ionicHistory) {
+    $ionicViewService.nextViewOptions({
+    disableBack: true
+    });
+    
 ngFB.logout(function(res){
-    window.localStorage.remove(0);
-    window.localStorage.remove(1);
+    
 });
+//super.clearCache();
+    window.localStorage.removeItem("store");
+    window.localStorage.removeItem("atkn");
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
 $state.go('login');
 })
 
@@ -31,6 +39,7 @@ $scope.goprof=function(){
 	var value=null,actkn="";
 
 	value = window.localStorage.getItem("store");
+    //alert(value);
 	//alert(actkn);
 	if(value!=null)
 	{
@@ -208,29 +217,42 @@ $scope.goprof=function(){
         							query.equalTo("userid",user.id);
                                     query.find({
                                         success:function(obj){
-                                            window.localStorage.setItem("store", user.id);
-                                            var keyname = window.localStorage.key(0);
-                                            window.localStorage.setItem("atkn", response.authResponse.accessToken);
-                                            var keyname1 = window.localStorage.key(1);
-                                            $state.go('load');
-                                        },
-                                        error:function(){
-                                            var userdetails = new Userdetails();
-                                            userdetails.set("username",user.name);
-                                            userdetails.set("userid",user.id);
-                                            userdetails.set("matchesplayed",0);
-                                            userdetails.save(null, {
+                                            // alert("1 "+obj.length);
+                                            // alert("2 "+obj[0]);
+                                            // alert("3 "+obj);
+                                            if(obj.length==0)
+                                            {alert("yeah");
+                                                var userdetails = new Userdetails();
+                                                userdetails.set("username",user.name);
+                                                userdetails.set("userid",user.id);
+                                                userdetails.set("matchesplayed",0);
+                                                userdetails.save(null, {
                                                 success: function(match){
                                                     window.localStorage.setItem("store", user.id);
                                                     var keyname = window.localStorage.key(0);
                                                     window.localStorage.setItem("atkn", response.authResponse.accessToken);
                                                     var keyname1 = window.localStorage.key(1);
-                                                    $state.go('load');
+                                                    
+                                                        $state.go('load');
+                                                    
                                                     },
                                                 error: function(match, error) {
                                                     alert("Server Error");
                                                     }
                                                 });
+                                            }
+                                            else{
+                                                window.localStorage.setItem("store", user.id);
+                                                var keyname = window.localStorage.key(0);
+                                                window.localStorage.setItem("atkn", response.authResponse.accessToken);
+                                                var keyname1 = window.localStorage.key(1);
+                                                
+                                                        $state.go('load');
+                                                   
+                                            }
+                                        },
+                                        error:function(){
+                                            alert("Login Error");
                                         }
                                     });
                     				
@@ -271,7 +293,8 @@ $scope.goprof=function(){
         };
     })
 .controller('SportListCtrl', function($http,sharedProperties,$state,$timeout, $rootScope,$scope, $stateParams, uiGmapGoogleMapApi, uiGmapLogger) {
-     Parse.initialize("TZI5mrqAtri1QUbijHS9wsvVWxaXz2o841Pyte8m", "wsp0XUEDEJAmnclSOPlK7LGYXwGTnYwZE3uQ5KDh");
+    Parse.initialize("TZI5mrqAtri1QUbijHS9wsvVWxaXz2o841Pyte8m", "wsp0XUEDEJAmnclSOPlK7LGYXwGTnYwZE3uQ5KDh");
+    adbuddiz.showAd();
     $scope.number=0;
     $scope.center = {"latitude":-21,"longitude":23};
     $scope.markercord = {"latitude":-21,"longitude":23};
@@ -545,6 +568,11 @@ query.greaterThanOrEqualTo("date",now);
 })
 
 .controller('load', function($ionicViewService,$http,ngFB,$rootScope,$timeout,$scope,$state,$ionicPlatform,cordovaGeolocationService) {
+      adbuddiz.setAndroidPublisherKey("7a870a1d-139c-4cfb-b668-27223fbdc940");
+      adbuddiz.cacheAds();
+
+
+
 	$ionicViewService.nextViewOptions({
     disableBack: true
 	});
@@ -552,8 +580,22 @@ $rootScope.existingGame=0;
 $rootScope.userCurrentLoc={};
 $rootScope.profpic;
 $rootScope.matchesplayed=0;
+
 ngFB.init({appId: '1379246572398138'});
 Parse.initialize("TZI5mrqAtri1QUbijHS9wsvVWxaXz2o841Pyte8m", "wsp0XUEDEJAmnclSOPlK7LGYXwGTnYwZE3uQ5KDh");
+
+ParsePushPlugin.register({appId:"TZI5mrqAtri1QUbijHS9wsvVWxaXz2o841Pyte8m", clientKey:"wsp0XUEDEJAmnclSOPlK7LGYXwGTnYwZE3uQ5KDh",eventKey:"myEventKey"}, //will trigger receivePN[pnObj.myEventKey]
+function() {
+    alert('successfully registered device!');
+
+    ParsePushPlugin.saveInstallation(function(int a){alert(a);},function(){});
+    
+}, function(e) {
+    alert('error registering device: ' + e);
+});
+
+
+
 var Userdetails= Parse.Object.extend("UserDetails");
                 //var userdetails = new Userdetails();
                 var query = new Parse.Query(Userdetails);
@@ -568,6 +610,7 @@ var Userdetails= Parse.Object.extend("UserDetails");
             //alert(loc.lat+","+loc.lng);
             //$scope.map = { center: { latitude: -21, longitude: 32 }, zoom: 16 };
     	});
+    
 	//alert($rootScope.userCurrentLoc.latitude);
 var actkn= window.localStorage.getItem("atkn");
 //alert(actkn);
@@ -579,6 +622,7 @@ var actkn= window.localStorage.getItem("atkn");
         		});
 		
   $timeout(function() {
+    
   	query.equalTo("userid",$rootScope.user.id);
   	query.find({success: function(object) {
     	$rootScope.matchesplayed=object[0].get("matchesplayed");

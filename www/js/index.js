@@ -89,29 +89,4 @@ angular.module('ionicApp', ['ionic'])
     $ionicSideMenuDelegate.toggleRight();
   };
 })
-.controller('HomeTabCtrl', function($scope) {
-    alert("he");
-});
-.controller('AlertsCtrl', function($scope) {
-    $scope.alertsList = [
-    { price: '$4.99', text: 'Pizza' },
-    { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-        { price: '$2.99', text: 'Burger' },
-    { price: '$3.99', text: 'Pasta' },
-  ];
-});
+
